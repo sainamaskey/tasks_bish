@@ -250,7 +250,7 @@ class _TaskManagerScreenState extends State<TaskManagerScreen> {
                             )
                           : const Icon(Icons.add),
                       label: Text(
-                        isLoading ? 'Adding...' : 'Add Task',
+                        isLoading ? 'Adding..' : 'Add Task',
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
