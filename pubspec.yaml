@@ -43,6 +43,9 @@ dependencies:
   
   # Coordinate handling for flutter_map
   latlong2: ^0.9.0
+  
+  # Local storage for authentication and data persistence
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
