@@ -159,33 +159,61 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFBF5),
       appBar: AppBar(
-        title: const Text('Fill Form'),
+        title: Row(
+          children: [
+            Icon(
+              Icons.edit_note_rounded,
+              color: Theme.of(context).colorScheme.primary,
+              size: 22,
+            ),
+            const SizedBox(width: 8),
+            const Text('Fill Form'),
+          ],
+        ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            )
           : _formConfig == null
               ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.error_outline,
-                        size: 64,
-                        color: Colors.red[300],
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        _errorMessage ?? 'Failed to load form',
-                        style: Theme.of(context).textTheme.titleMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: _loadFormConfig,
-                        child: const Text('Retry'),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFE8E8),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.error_outline_rounded,
+                            size: 48,
+                            color: const Color(0xFFD4A5A5),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          _errorMessage ?? 'Failed to load form',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                color: const Color(0xFF5A5A5A),
+                              ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 32),
+                        ElevatedButton.icon(
+                          onPressed: _loadFormConfig,
+                          icon: const Icon(Icons.refresh_rounded),
+                          label: const Text('Retry'),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : Form(
@@ -194,22 +222,75 @@ class _FormScreenState extends State<FormScreen> {
                     children: [
                       Expanded(
                         child: SingleChildScrollView(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                _formConfig!.formTitle,
-                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                      fontWeight: FontWeight.bold,
+                              Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF9CAF88)
+                                          .withOpacity(0.1),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 4),
                                     ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Version ${_formConfig!.version}',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: Colors.grey[600],
+                                  ],
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.description_rounded,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          size: 24,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            _formConfig!.formTitle,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall
+                                                ?.copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: const Color(0xFF5A5A5A),
+                                                ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    const SizedBox(height: 12),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFE8B4B8)
+                                            .withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        'Version ${_formConfig!.version}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: const Color(0xFFE8B4B8),
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 24),
                               ..._formConfig!.fields.map((field) {
@@ -224,21 +305,32 @@ class _FormScreenState extends State<FormScreen> {
                               }).toList(),
                               if (_errorMessage != null)
                                 Container(
-                                  padding: const EdgeInsets.all(12),
+                                  padding: const EdgeInsets.all(16),
                                   margin: const EdgeInsets.only(top: 16),
                                   decoration: BoxDecoration(
-                                    color: Colors.red[50],
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(color: Colors.red[300]!),
+                                    color: const Color(0xFFFFE8E8),
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: const Color(0xFFD4A5A5)
+                                          .withOpacity(0.5),
+                                      width: 1.5,
+                                    ),
                                   ),
                                   child: Row(
                                     children: [
-                                      Icon(Icons.error_outline, color: Colors.red[700]),
-                                      const SizedBox(width: 8),
+                                      Icon(
+                                        Icons.error_outline_rounded,
+                                        color: const Color(0xFFD4A5A5),
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 12),
                                       Expanded(
                                         child: Text(
                                           _errorMessage!,
-                                          style: TextStyle(color: Colors.red[700]),
+                                          style: const TextStyle(
+                                            color: Color(0xFFD4A5A5),
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -249,32 +341,60 @@ class _FormScreenState extends State<FormScreen> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
+                          color: const Color(0xFFFFFBF5),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 4,
-                              offset: const Offset(0, -2),
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, -4),
                             ),
                           ],
                         ),
                         child: SafeArea(
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: _isSubmitting ? null : _handleSubmit,
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF9CAF88).withOpacity(0.3),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                onPressed: _isSubmitting ? null : _handleSubmit,
+                                icon: _isSubmitting
+                                    ? const SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2.5,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            Colors.white,
+                                          ),
+                                        ),
+                                      )
+                                    : const Icon(Icons.check_circle_outline_rounded),
+                                label: Text(
+                                  _isSubmitting ? 'Submitting...' : 'Submit Form',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 18,
+                                  ),
+                                ),
                               ),
-                              child: _isSubmitting
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(strokeWidth: 2),
-                                    )
-                                  : const Text('Submit Form'),
                             ),
                           ),
                         ),

@@ -74,11 +74,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFBF5),
       appBar: AppBar(
-        title: const Text('User Data Collector'),
+        title: Row(
+          children: [
+            Icon(
+              Icons.local_florist,
+              color: Theme.of(context).colorScheme.primary,
+              size: 24,
+            ),
+            const SizedBox(width: 8),
+            const Text('User Data Collector'),
+          ],
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout_rounded),
             onPressed: _handleLogout,
             tooltip: 'Logout',
           ),
@@ -88,20 +99,69 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Welcome, ${_username ?? 'User'}!',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF9CAF88).withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.eco,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Welcome back,',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: const Color(0xFF9CAF88),
+                                    fontSize: 14,
+                                  ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              _username ?? 'User',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xFF5A5A5A),
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 20),
                   Text(
                     'Manage your form submissions',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: const Color(0xFF9CAF88),
+                          fontSize: 15,
+                        ),
                   ),
                 ],
               ),
@@ -109,26 +169,56 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton.icon(
-                onPressed: _navigateToForm,
-                icon: const Icon(Icons.add),
-                label: const Text('Fill New Form'),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  minimumSize: const Size(double.infinity, 48),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF9CAF88).withOpacity(0.25),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: ElevatedButton.icon(
+                  onPressed: _navigateToForm,
+                  icon: const Icon(Icons.add_circle_outline, size: 22),
+                  label: const Text(
+                    'Fill New Form',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    minimumSize: const Size(double.infinity, 56),
+                  ),
                 ),
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Submission History',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.history,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Submission History',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF5A5A5A),
+                        ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -136,29 +226,49 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.inbox_outlined,
-                      size: 64,
-                      color: Colors.grey[400],
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'No submissions yet',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Colors.grey[600],
+                child: Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF9CAF88).withOpacity(0.1),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.article_outlined,
+                          size: 56,
+                          color: const Color(0xFF9CAF88).withOpacity(0.6),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Fill out a form to see your submissions here',
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: Colors.grey[500]),
-                    ),
-                  ],
+                      const SizedBox(height: 24),
+                      Text(
+                        'No submissions yet',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: const Color(0xFF5A5A5A),
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Fill out a form to see your submissions here',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: const Color(0xFF9CAF88),
+                              fontSize: 14,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
@@ -172,10 +282,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _navigateToForm,
-        icon: const Icon(Icons.add),
-        label: const Text('New Form'),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFE8B4B8).withOpacity(0.4),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: FloatingActionButton.extended(
+          onPressed: _navigateToForm,
+          icon: const Icon(Icons.add_rounded, size: 22),
+          label: const Text(
+            'New Form',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -189,13 +317,33 @@ class _SubmissionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: const Color(0xFF9CAF88).withOpacity(0.2),
+          width: 1,
+        ),
+      ),
       child: InkWell(
         onTap: () {
           _showSubmissionDetails(context);
         },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.white,
+                const Color(0xFFFFF8F0).withOpacity(0.5),
+              ],
+            ),
+          ),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -203,48 +351,113 @@ class _SubmissionCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.article_rounded,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            submission.formTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xFF5A5A5A),
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE8B4B8).withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: Text(
-                      submission.formTitle,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                      'v${submission.version}',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFFE8B4B8),
                       ),
                     ),
                   ),
-                  Chip(
-                    label: Text('v${submission.version}'),
-                    labelStyle: const TextStyle(fontSize: 12),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Icon(
+                    Icons.access_time_rounded,
+                    size: 14,
+                    color: const Color(0xFF9CAF88),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    _formatDate(submission.submittedAt),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFF9CAF88),
+                          fontSize: 13,
+                        ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              Text(
-                _formatDate(submission.submittedAt),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
-              ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: submission.data.entries.take(3).map((entry) {
-                  return Chip(
-                    label: Text(
-                      '${entry.key}: ${_formatValue(entry.value)}',
-                      style: const TextStyle(fontSize: 12),
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
                     ),
-                    visualDensity: VisualDensity.compact,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF9CAF88).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: const Color(0xFF9CAF88).withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      '${entry.key}: ${_formatValue(entry.value)}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: const Color(0xFF5A5A5A),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   );
                 }).toList(),
               ),
               if (submission.data.length > 3)
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    '+${submission.data.length - 3} more fields',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  padding: const EdgeInsets.only(top: 12.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.more_horiz_rounded,
+                        size: 16,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '+${submission.data.length - 3} more fields',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
                   ),
                 ),
             ],

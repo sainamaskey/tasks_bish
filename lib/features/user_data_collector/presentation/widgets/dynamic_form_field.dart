@@ -185,30 +185,54 @@ class _DynamicFormFieldState extends State<DynamicFormField> {
             return null;
           },
           builder: (formFieldState) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CheckboxListTile(
-                  title: Text(widget.field.label),
-                  value: _value as bool? ?? false,
-                  onChanged: (value) {
-                    _handleChange(value);
-                    formFieldState.didChange(value);
-                  },
-                  contentPadding: EdgeInsets.zero,
+            return Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: formFieldState.hasError
+                      ? const Color(0xFFD4A5A5)
+                      : Colors.grey.shade300,
+                  width: 1.5,
                 ),
-                if (formFieldState.hasError)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, top: 4.0),
-                    child: Text(
-                      formFieldState.errorText ?? '',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                        fontSize: 12,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CheckboxListTile(
+                    title: Text(
+                      widget.field.label,
+                      style: const TextStyle(
+                        color: Color(0xFF5A5A5A),
+                        fontSize: 15,
                       ),
                     ),
+                    value: _value as bool? ?? false,
+                    onChanged: (value) {
+                      _handleChange(value);
+                      formFieldState.didChange(value);
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    checkColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-              ],
+                  if (formFieldState.hasError)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0, top: 4.0),
+                      child: Text(
+                        formFieldState.errorText ?? '',
+                        style: const TextStyle(
+                          color: Color(0xFFD4A5A5),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             );
           },
         );
